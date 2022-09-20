@@ -1,4 +1,9 @@
 {
-  "products" : "Products"
-
+  "welcome" : "Welcome",
+  "login" : "Login",
+  "signIn" : "Sign In",
+  "signUp" : "Sign Up",
+  "password" : "Password",
+  "forgotPassword" : "Forgot your password?",
+  "loginWith" : "Or login with:"
 }

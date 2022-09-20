@@ -80,20 +80,18 @@ class ActivityDetailsScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: AppColors.mainBGColor,
+                        backgroundColor: AppColors.mainBGColor,
                       ),
                       onPressed: () {},
                       child: const Text('Перейти к оплате'),
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
-                  const Expanded(
-                    child: Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: BottomSheets(),
-                    ),
+                  const Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: BottomSheets(),
                   ),
                 ],
               ),

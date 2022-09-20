@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:yoko_test/constants/app_assets.dart';
 import 'package:yoko_test/constants/app_colors.dart';
 import 'package:yoko_test/constants/app_styles.dart';
 import 'package:yoko_test/screens/activities_screen/activities_screen.dart';
-import 'package:yoko_test/screens/registration_screen/registration_screen.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:http/http.dart';
+
+import '../../generated/l10n.dart';
+import 'components/login_with.dart';
+import 'components/text_buttons.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -23,6 +27,34 @@ class _LoginScreenState extends State<LoginScreen> {
   late String _email;
   late String _password;
 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void login(String email , password) async {
+
+    try{
+      Response response = await post(
+          Uri.parse('https://api.shymbulak-dev.com/user-service/auth/login'),
+          body: {
+            'email' : email,
+            'password' : password
+          }
+      );
+
+      if(response.statusCode == 200){
+
+        var data = jsonDecode(response.body.toString());
+        print(data['token']);
+        print('Login successfully');
+
+      }else {
+        print('incorrect login and password');
+      }
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Добро \nпожаловать,\nАвторизуйтесь',
+            Text('${S.of(context).welcome}\n${S.of(context).login}',
             style: AppStyles.loginTitleStyle,
             ),
             const SizedBox(
@@ -41,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Form(
               child: TextFormField(
+                controller: emailController,
                validator: (value) => EmailValidator.validate(value!) ? null : "Please enter a valid email",
                 style: const TextStyle(color: AppColors.whiteTextColor),
                 decoration: InputDecoration(
@@ -67,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 10,
             ),
             TextFormField(
+              controller: passwordController,
               obscureText: passwordVisibility,
               style: const TextStyle(color: AppColors.whiteTextColor),
               decoration: InputDecoration(
@@ -86,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   filled: true,
-                  hintText: "Пароль",
+                  hintText: S.of(context).password,
                   hintStyle: const TextStyle(
                     color: Colors.white54,
                   ),
@@ -104,65 +138,30 @@ class _LoginScreenState extends State<LoginScreen> {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: buttonColor,
-                  onPrimary: buttonTextColor, // foreground
+                  foregroundColor: buttonTextColor,
+                  backgroundColor: buttonColor, // foreground
                 ),
                 onPressed: (){
                   if(_email == 'test@yoko.space' && _password == 'qwerty123'){
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const ActivitiesScreen()));
                   } 
                   },
-                child: const Text('Войти'),
+                child: Text(S.of(context).signIn),
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  style: TextButton.styleFrom(
-                    primary: Colors.white,
-                  ),
-                    onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()));
-                }, child: const Text('Регистрация'),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    primary: Colors.white54,
-                  ),
-                    onPressed: (){},
-                  child: const Text('Забыли пароль?'),
-                ),
-              ],
-            ),
+            const TextButtons(),
             const SizedBox(
               height: 20,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Или войдите через:', style: AppStyles.s14w500,),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(AppAssets.svg.google),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SvgPicture.asset(AppAssets.svg.facebook),
-                  ],
-                )
-              ],
-            )
+            const LoginWith(),
           ],
         ),
       ),
     );
   }
 }
+
+

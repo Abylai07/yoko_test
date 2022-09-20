@@ -50,71 +50,71 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Products`
-  String get products {
+  /// `Welcome`
+  String get welcome {
     return Intl.message(
-      'Products',
-      name: 'products',
+      'Welcome',
+      name: 'welcome',
       desc: '',
       args: [],
     );
   }
 
-  /// `Error`
-  String get error {
+  /// `Login`
+  String get login {
     return Intl.message(
-      'Error',
-      name: 'error',
+      'Login',
+      name: 'login',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sort: asc`
-  String get asc {
+  /// `Sign In`
+  String get signIn {
     return Intl.message(
-      'Sort: asc',
-      name: 'asc',
+      'Sign In',
+      name: 'signIn',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sort: desc`
-  String get desc {
+  /// `Sign Up`
+  String get signUp {
     return Intl.message(
-      'Sort: desc',
-      name: 'desc',
+      'Sign Up',
+      name: 'signUp',
       desc: '',
       args: [],
     );
   }
 
-  /// `Category`
-  String get category {
+  /// `Password`
+  String get password {
     return Intl.message(
-      'Category',
-      name: 'category',
+      'Password',
+      name: 'password',
       desc: '',
       args: [],
     );
   }
 
-  /// `electronics`
-  String get electronics {
+  /// `Forgot your password?`
+  String get forgotPassword {
     return Intl.message(
-      'electronics',
-      name: 'electronics',
+      'Forgot your password?',
+      name: 'forgotPassword',
       desc: '',
       args: [],
     );
   }
 
-  /// `jewelery`
-  String get jewelery {
+  /// `Or login with:`
+  String get loginWith {
     return Intl.message(
-      'jewelery',
-      name: 'jewelery',
+      'Or login with:',
+      name: 'loginWith',
       desc: '',
       args: [],
     );
